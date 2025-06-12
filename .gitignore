@@ -1,0 +1,5 @@
+.vscode
+*.dll
+*.o
+main.c
+teste
