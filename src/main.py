@@ -32,6 +32,7 @@ a_total = 0
 b_total = 0
 
 iteracoes_totais = 100000
+
 for i in range(iteracoes_totais):
     grafo_dll.gerarGrafoAleatorio(grafo, MAX)
     a = dijkstra_dll.dijkstra(grafo, MAX, START, GOAL, ctypes.byref(d_tempo))
@@ -54,7 +55,6 @@ print(f"Empates                    : {empate}")
 print(f"\nTempo total do Dijkstra    : {d_tempo.value:.6f} segundos")
 print(f"Tempo total do A*          : {a_tempo.value:.6f} segundos")
 
-# Cálculo de tempo médio
 if d_count + a_count + empate > 0:
     print(f"\n\t------- Médias ---------:")
     print(f" - Dijkstra                : {d_tempo.value / iteracoes_totais:.8f} s por iteração")
