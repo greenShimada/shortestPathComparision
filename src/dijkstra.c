@@ -2,9 +2,9 @@
 #include <stdio.h>
 
 
-DLL_EXPORT int dijkstra(int cost[MAX][MAX], int n, int startnode, int goal, double* tempo_execucao) {
+DLL_EXPORT int dijkstra(int n, int cost[n][n], int startnode, int goal, double* tempo_execucao) {
     clock_t inicio = clock();
-
+    int MAX = n;
     int distance[MAX], pred[MAX];
     int visited[MAX], mindistance, nextnode, i, j;
 

@@ -1,16 +1,16 @@
 #include "./headers/grafo.h"
 
-int x[MAX], y[MAX]; 
-
 typedef struct {
     int node;
     int f_score; 
 } PQNode;
 
 typedef struct {
-    PQNode data[MAX];
+    PQNode *data;
     int size;
+    int capacity;
 } PriorityQueue;
+
 
 void swap(PQNode *a, PQNode *b) {
     PQNode temp = *a;
@@ -19,6 +19,9 @@ void swap(PQNode *a, PQNode *b) {
 }
 
 void push(PriorityQueue *pq, int node, int f_score) {
+    if (pq->size >= pq->capacity) {
+        return; 
+    }
     int i = pq->size++;
     pq->data[i].node = node;
     pq->data[i].f_score = f_score;
@@ -50,15 +53,23 @@ int pop(PriorityQueue *pq) {
     return node;
 }
 
+
 int heuristic(int a, int b) {
     return 1000;
 }
 
-DLL_EXPORT int astar(int cost[MAX][MAX], int n, int startnode, int goal, double* tempo_execucao) {
+DLL_EXPORT int astar(int n, int cost[n][n], int startnode, int goal, double* tempo_execucao) {
     clock_t inicio = clock();
 
-    int g_score[MAX], f_score[MAX], pred[MAX], visited[MAX] = {0};
-    PriorityQueue pq = { .size = 0 };
+    int *g_score = malloc(n * sizeof(int));
+    int *f_score = malloc(n * sizeof(int));
+    int *pred = malloc(n * sizeof(int));
+    int *visited = calloc(n, sizeof(int)); // inicializado com 0
+
+    PriorityQueue pq;
+    pq.data = malloc(n * sizeof(PQNode));
+    pq.size = 0;
+    pq.capacity = n;
 
     for (int i = 0; i < n; i++) {
         g_score[i] = INFINITY;
@@ -99,6 +110,14 @@ DLL_EXPORT int astar(int cost[MAX][MAX], int n, int startnode, int goal, double*
         *tempo_execucao += (double)(fim - inicio) / CLOCKS_PER_SEC;
     }
 
-    return g_score[goal];
+    int resultado = g_score[goal];
+
+    free(g_score);
+    free(f_score);
+    free(pred);
+    free(visited);
+    free(pq.data);
+
+    return resultado;
 }
 

@@ -2,7 +2,8 @@
 #include <time.h>
 #include <stdio.h>
 
-DLL_EXPORT void gerarGrafoAleatorio(int G[MAX][MAX], int n) {
+DLL_EXPORT void gerarGrafoAleatorio(int n, int G[n][n]) {
+    
     static int seeded = 0;
     if (!seeded) {
         srand((unsigned int)(time(NULL)));
@@ -18,7 +19,7 @@ DLL_EXPORT void gerarGrafoAleatorio(int G[MAX][MAX], int n) {
                 if (aleatorio < 30) {
                     G[i][j] = INFINITY; 
                 } else {
-                    G[i][j] = (rand() % 20) + 1000; 
+                    G[i][j] = (rand() % 200) + 1000; 
                 }
             }
         }
